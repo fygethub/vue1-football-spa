@@ -50,6 +50,7 @@
                      if (!data.code) {
                       localStorage.setItem('phone',this.user.phone);
                       localStorage.setItem('pwd',this.user.pwd);
+                      sessionStorage.setItem('username',this.user.phone);
                       this.$route.router.go('/index/home/hot/live');
                      }else{
                       alert('用户名密码不对!');
