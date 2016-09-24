@@ -15,22 +15,31 @@ module.exports=function(router){
                        '/hot':{
                             component:require('components/index/home/hot.vue'),
                             subRoutes: {
-                                'live': {component:require('components/index/home/hot/live.vue')},
-                                'life': {component:require('components/index/home/hot/life.vue')},
-                                'girl': {component:require('components/index/home/hot/girl.vue')}
+                                'live': {
+                                    component:require('components/index/home/hot/live.vue'),
+                                    auth:true
+                                },
+                                'life': {
+                                    component:require('components/index/home/hot/life.vue'),
+                                    auth:true
+                                },
+                                'girl': {
+                                    component:require('components/index/home/hot/girl.vue'),
+                                    auth:true
+                                }
                             }
                         },
                         '/focus': {
                             component:require('components/index/home/focus.vue')
                         }
                     }
-    	 		},
-                '/find': {
-                    component:require('components/index/find.vue')
-                },
-                '/mine': {
-                    component:require('components/index/mine.vue')
-                }
+    	 	   	},
+          '/find': {
+              component:require('components/index/find.vue')
+          },
+          '/mine': {
+              component:require('components/index/mine.vue')
+          }
     	 	}
     	}
  
@@ -38,5 +47,19 @@ module.exports=function(router){
 
     router.redirect({
     	'/':'/login',
+    })
+    router.beforeEach(function (transition) {
+        console.log('验证登录!');
+        var reglogin = /login$/,
+            reregister = /register$/;
+       if(reglogin.test(transition.to.path) || reregister.test(transition.to.path)){
+            transition.next();
+       }else{
+          var sessionName = sessionStorage.getItem('username');
+          if (!sessionName) 
+              transition.redirect('/login');
+          transition.next();
+       }
+       
     })
 }

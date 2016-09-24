@@ -1,53 +1,44 @@
 <template>	
 	<section id="contentbar_life">
 		<div class="content mauto">
-			<div class="group">
-				<dl>
-					<dt><img src="/static/img/live_pic1.jpg" alt="pic"></dt>
-					<dd>徐云龙争端</dd>
-				</dl>
-				<dl>
-					<dt><img src="/static/img/live_pic2.jpg" alt="pic"></dt>
-					<dd>马季向裁判示意对手拉扯吴磊今后后腿抽筋</dd>
-				</dl>
-				<dl>
-					<dt><img src="/static/img/live_pic1.jpg" alt="pic"></dt>
-					<dd>徐云龙争端</dd>
-				</dl>
-				<dl>
-					<dt><img src="/static/img/live_pic2.jpg" alt="pic"></dt>
-					<dd>徐云龙争端</dd>
-				</dl>
-				<dl>
-					<dt><img src="/static/img/live_pic1.jpg" alt="pic"></dt>
-					<dd>徐云龙争端</dd>
-				</dl>
-				<dl>
-					<dt><img src="/static/img/live_pic2.jpg" alt="pic"></dt>
-					<dd>徐云龙争端</dd>
-				</dl>
-				<dl>
-					<dt><img src="/static/img/live_pic1.jpg" alt="pic"></dt>
-					<dd>徐云龙争端</dd>
-				</dl>
-				<dl>
-					<dt><img src="/static/img/live_pic2.jpg" alt="pic"></dt>
-					<dd>徐云龙争端</dd>
-				</dl>
-			</div>
+			<dl v-for="item in msgs">
+				<dt><img :src="item.imgsrc" alt="pic"></dt>
+				<dd>{{item.msg}}</dd>
+			</dl>
 		</div>
 	</section>
 </template>
 <script>
-	
+	module.exports = {
+		data: function () {
+			return {
+				msgs:[]
+			}
+		},
+		route:{
+			activate:function (transition) {
+				console.log('life active');
+				transition.next();
+			},
+			data: function (transition) {
+				this.$http.post('/api/life',{}).then(function (req) {
+					console.log(req.data);
+					this.msgs = req.data;
+					transition.next();
+				}, function (error) {
+					console.error(error);
+				});
+			}
+		}
+	}
 </script>
 <style>
 /*-content-*/
 #contentbar_life{width: 100%;position:relative;top:1.5rem;margin-bottom: .9rem}
 #contentbar_life .content{width: 6.4rem;}
-#contentbar_life .group{display: flex;align-content: space-between;flex-wrap: wrap;}
-#contentbar_life .group dl{margin:.1rem 0;font-size:.4rem;padding-top:.1rem;}
-#contentbar_life .group  dl dt{width: 3.15rem;border:1px solid #f1f1f1;}
-#contentbar_life .group dl dt img{width: 100%;}
-#contentbar_life .group dl dd{width: 3.15rem;font-size:.25rem;border:1px solid #f1f1f1;box-sizing:border-box;padding:.1rem 0 0 .2rem;}
+#contentbar_life .content{display: flex;align-content: space-between;flex-wrap: wrap;}
+#contentbar_life .content dl{margin:.1rem 0;font-size:.4rem;padding-top:.1rem;}
+#contentbar_life .content  dl dt{width: 3.15rem;border:1px solid #f1f1f1;}
+#contentbar_life .content dl dt img{width: 100%;}
+#contentbar_life .content dl dd{width: 3.15rem;font-size:.3rem;border:1px solid #f1f1f1;box-sizing:border-box;padding:.1rem 0 0 .2rem;}
 </style>

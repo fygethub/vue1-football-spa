@@ -4,13 +4,13 @@
 	<footer id="footer" >
 		<ul class="mauto textcenter">
 			<li >
-				<dl @click="clickIndex"  v-link="{path:'/index/home/',activeClass:'v-link-active'}">
+				<dl @click="clickIndex"  v-link="{path:'/index/home/'}" activeClass>
 					<dt class="iconfont">&#xe604;</dt>
 					<dd>首页</dd>
 				</dl>
 			</li>
 			<li>
-				<dl v-link="{path:'/index/find',activeClass:'v-link-active'}" @click="clickFind">
+				<dl v-link="{path:'/index/find'}" @click="clickFind" activeClass>
 					<dt class="iconfont">&#xe600;</dt>
 					<dd>发现</dd>
 				</dl>
